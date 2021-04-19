@@ -16,8 +16,8 @@ public class EchoCommand extends Command {
 			if (i < arguments.size() - 1) {
 				System.out.print(' ');
 			}
-			System.out.println();
 		}
+		System.out.println();
 		return 0;
 	}
 
