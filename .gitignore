@@ -1,4 +1,5 @@
 magic-conch-shell.jar
+*.swp
 
 # Compiled class file
 *.class
