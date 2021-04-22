@@ -2,7 +2,7 @@ package com.alteredmechanism.mcsh.commands;
 
 import java.util.List;
 
-import javax.script.ScriptException;
+import com.alteredmechanism.mcsh.ShellException;
 
 public abstract class Command {
 
@@ -16,5 +16,5 @@ public abstract class Command {
 		return arguments;
 	}
 	
-	public abstract int execute() throws ScriptException;
+	public abstract int execute() throws ShellException;
 }
