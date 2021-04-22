@@ -1,2 +1,19 @@
 #!/bin/sh
-java -cp magic-conch-shell.jar:lib/bsf-api-3.1.jar com.alteredmechanism.magic_conch_shell.MagicConchShell "$@"
+
+CLAZZ_PATH=magic-conch-shell.jar:lib/bsf-api-3.1.jar
+MAIN_CLASS=com.alteredmechanism.magic_conch_shell.MagicConchShell 
+
+# This can happen if a Windows version of Java is run in Cygwin, Mingw, or Git Bash.
+isRunningOnWindows()
+{
+  [ -n "$COMSPEC" -o -n "$PATHEXT" ]
+}
+
+
+if isRunningOnWindows
+then
+  # Switch colons to semicolons in classpath.
+  CLAZZ_PATH="${CLAZZ_PATH//:/;}"
+fi
+
+java -classpath $CLAZZ_PATH $MAIN_CLASS "$@"
