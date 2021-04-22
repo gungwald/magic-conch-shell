@@ -1,10 +1,10 @@
-package com.alteredmechanism.magic_conch_shell;
+package com.alteredmechanism.mcsh;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.alteredmechanism.magic_conch_shell.commands.Command;
+import com.alteredmechanism.mcsh.commands.Command;
 
 public class Parser {
 	

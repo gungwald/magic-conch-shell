@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CLAZZ_PATH=magic-conch-shell.jar:lib/bsf-api-3.1.jar
-MAIN_CLASS=com.alteredmechanism.magic_conch_shell.MagicConchShell 
+CLAZZ_PATH=magic-conch-shell.jar
+MAIN_CLASS=com.alteredmechanism.mcsh.Main 
 
 # This can happen if a Windows version of Java is run in Cygwin, Mingw, or Git Bash.
 isRunningOnWindows()

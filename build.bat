@@ -15,13 +15,12 @@ rem Theoretically just the main class could be passed to the compiler and it
 rem would automatically find all the dependencies. But, if the main class
 rem package or name was changed, it would break the build and this file would
 rem have to be update. This method is less fragile and more change resistent.
-set CLASSPATH=lib/bsf-api-3.1.jar
 for /f %%f in ('dir /b/s *.java') do (
     set SOURCES=!SOURCES! %%f
 )
 rmdir /s/q "%BUILD_DIR%" || exit /b
 mkdir "%BUILD_DIR%" || exit /b
-javac -classpath "%CLASSPATH%" %SOURCES% -d "%BUILD_DIR%" || exit /b
+javac %SOURCES% -d "%BUILD_DIR%" || exit /b
 cd "%BUILD_DIR%" || exit /b
 
 rem This won't work until after javac generates some classes.

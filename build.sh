@@ -11,13 +11,12 @@ then
   exit
 fi
 
-CLASSPATH=lib/bsf-api-3.1.jar
 # shellcheck disable=SC2006
 SOURCES=`find . -name '*.java' -print`
 rm -rf "$BUILD_DIR" || exit
 mkdir "$BUILD_DIR" || exit
 # shellcheck disable=SC2086
-javac -classpath $CLASSPATH $SOURCES -d "$BUILD_DIR" || exit
+javac $SOURCES -d "$BUILD_DIR" || exit
 cd "$BUILD_DIR" || exit
 # This won't work until after javac generates some classes.
 # shellcheck disable=SC2006
