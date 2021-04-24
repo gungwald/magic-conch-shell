@@ -4,16 +4,17 @@ import java.util.List;
 
 import com.alteredmechanism.mcsh.ShellException;
 
-public class CpCommand extends Command {
+public class CommentCommand extends Command {
 
-    public CpCommand(List<String> arguments) {
+    public CommentCommand(List<String> arguments) {
         super(arguments);
+        // TODO Auto-generated constructor stub
     }
 
     @Override
     public int execute() throws ShellException {
-        ExternalCommand cp = new ExternalCommand(arguments);
-        return cp.execute();
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

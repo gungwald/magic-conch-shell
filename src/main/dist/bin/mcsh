@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CLAZZ_PATH=magic-conch-shell.jar
+CLAZZ_PATH=target/magic-conch-shell.jar
 MAIN_CLASS=com.alteredmechanism.mcsh.Main 
 
 # This can happen if a Windows version of Java is run in Cygwin, Mingw, or Git Bash.
@@ -8,7 +8,6 @@ isRunningOnWindows()
 {
   [ -n "$COMSPEC" -o -n "$PATHEXT" ]
 }
-
 
 if isRunningOnWindows
 then
