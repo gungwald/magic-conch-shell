@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# This can happen if a Windows version of Java is run in Cygwin, Mingw, or Git Bash.
+isRunningOnWindows()
+{
+  [ -n "$COMSPEC" -o -n "$PATHEXT" ]
+}
+
+getAbsolutePath()
+{
+    if [ -d "$1" ]
+    then
+    	(cd "$1" || exit ; pwd)
+    else
+        (cd `dirname "$1"` || exit ; echo `pwd`/`basename "$1"`)
+    fi
+}
+
+THIS_SCRIPT_ABS_PATH=`getAbsolutePath "$0"`
+TOP_DIR=`dirname "$THIS_SCRIPT_ABS_PATH"`
+JAR_DIR="$TOP_DIR"/share/java
+CLAZZ_PATH="$JAR_DIR"/magic-conch-shell.jar:"$JAR_DIR"/bsf-api-3.1.jar
+MAIN_CLASS=com.alteredmechanism.mcsh.Main 
+
+if isRunningOnWindows
+then
+  # Switch colons to semicolons in classpath.
+  CLAZZ_PATH="${CLAZZ_PATH//:/;}"
+fi
+
+java -classpath $CLAZZ_PATH $MAIN_CLASS "$@"

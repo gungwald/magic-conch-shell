@@ -7,6 +7,7 @@
 
 <project name="magic-conch-shell" default="jar" basedir=".">
 
+    <property environment="env" />
     <property name="main.class" value="com.alteredmechanism.mcsh.Main" />
     <property name="version" value="1.0" />
     <property name="lang.version" value="1.5" />
@@ -19,7 +20,10 @@
     <property name="java.1.4.app.jar" value="${lib.dir}/${ant.project.name}-java-1.4.jar" />
     <property name="java.1.3.app.jar" value="${lib.dir}/${ant.project.name}-java-1.3.jar" />
     <property name="run.script" value="${dist.dir}/bin/${ant.project.name}" />
-    <property name="sys.install.dir" value="/usr/local" />
+    <property name="user.install.dir" value="${user.home}/.local" />
+    <condition property="sys.install.dir" value="${env.ProgramFiles}/${ant.project.name}" else="/usr/local">
+        <os family="windows" />
+    </condition>
     <property name="bld.dist.dir" value="${build.dir}/distribution" />
     <property name="bsf.lib.dir" value="dependencies/bsf-3.1/lib" />
     <property name="bsf.jar" value="${bsf.lib.dir}/bsf-api-3.1.jar" />
@@ -87,34 +91,49 @@
         -->
     </target>
 
-    <target name="distSetup" depends="jar,retroJar" description="Assembles a production-like setup in the dev directory for testing" >
+    <target name="distSetup" depends="jar,retroJar" description="Assembles a production-like setup in the dev directory for testing">
         <mkdir dir="${bld.dist.dir}/bin" />
         <mkdir dir="${bld.dist.dir}/share/java" />
-        <copy file="${run.script}" todir="${bld.dist.dir}/bin" preservelastmodified="true" />
-        <chmod file="${bld.dist.dir}/bin/${ant.project.name}" perm="ugo+rx" />
-        <copy file="${app.jar}" todir="${bld.dist.dir}/share/java" preservelastmodified="true" />
-        <exec dir="${user.home}/bin" executable="cmd.exe" osfamily="windows">
-            <arg line="${dist.dir}/bin/addtopath.bat" />
-        </exec>
+        <copy todir="${bld.dist.dir}/bin" preservelastmodified="true" >
+            <fileset dir="${dist.dir}/bin" includes="**/*" />
+        </copy>
+        <chmod perm="ugo+rx" >
+            <fileset dir="${bld.dist.dir}/bin" excludes="**/*.bat"/>
+        </chmod>
+        <copy todir="${bld.dist.dir}/share/java" preservelastmodified="true" >
+            <fileset dir="${lib.dir}" includes="**/*.jar" />
+        </copy>
+        <copy file="${bsf.jar}" todir="${bld.dist.dir}/share/java" preservelastmodified="true" />
     </target>
-    
+
     <target name="userInstall" depends="jar" description="Installs into $HOME/bin and $HOME/lib">
-        <mkdir dir="${user.home}/bin" />
-        <copy file="${run.script}" todir="${user.home}/bin" preservelastmodified="true" />
-        <chmod file="${user.home}/bin/${ant.project.name}" perm="ugo+rx" />
-        <mkdir dir="${user.home}/lib" />
-        <copy file="${app.jar}" todir="${user.home}/lib" preservelastmodified="true" />
-        <exec dir="${user.home}/bin" executable="cmd.exe" osfamily="windows">
-            <arg line="${dist.dir}/bin/addtopath.bat" />
+        <mkdir dir="${user.install.dir}/bin" />
+        <mkdir dir="${user.install.dir}/share/java" />
+        <copy todir="${user.install.dir}/bin" preservelastmodified="true">
+            <fileset dir="${dist.dir}/bin" includes="**/*" />
+        </copy>
+        <chmod file="${user.install.dir}/bin/${ant.project.name}" perm="ugo+rx" />
+        <copy todir="${user.install.dir}/share/java" preservelastmodified="true">
+            <fileset dir="${lib.dir}" includes="**/jar.*" />
+        </copy>
+        <exec dir="${user.install.dir}/bin" executable="cmd.exe" osfamily="windows">
+            <arg line="${user.install.dir}/bin/addtopath.bat" />
         </exec>
     </target>
 
     <target name="systemInstall" depends="jar" description="Installs into /usr/local/bin and /usr/local/lib">
         <mkdir dir="${sys.install.dir}/bin" />
-        <copy file="${run.script}" todir="${sys.install.dir}/bin" preservelastmodified="true" />
+        <mkdir dir="${sys.install.dir}/share/java" />
+        <copy todir="${sys.install.dir}/bin" preservelastmodified="true">
+            <fileset dir="${dist.dir}/bin" includes="**/*" />
+        </copy>
         <chmod file="${sys.install.dir}/bin/${ant.project.name}" perm="ugo+rx" />
-        <mkdir dir="${sys.install.dir}/lib" />
-        <copy file="${app.jar}" todir="${sys.install.dir}/lib" preservelastmodified="true" />
+        <copy todir="${sys.install.dir}/share/java" preservelastmodified="true">
+            <fileset dir="${lib.dir}" includes="**/jar.*" />
+        </copy>
+        <exec dir="${sys.install.dir}/bin" executable="cmd.exe" osfamily="windows">
+            <arg line="${sys.install.dir}/bin/addtopath.bat" />
+        </exec>
     </target>
 
     <target name="distZip" depends="jar,retroJar" description="Build a zip file with just binaries for distribution to users">

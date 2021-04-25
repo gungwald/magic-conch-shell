@@ -1,4 +1,10 @@
-magic-conch-shell.jar
+# Build directory
+target/
+
+# Stupid Apple files
+.DS_Store
+
+# vim swap files
 *.swp
 
 # Compiled class file
