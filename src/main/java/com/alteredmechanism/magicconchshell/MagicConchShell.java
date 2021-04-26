@@ -1,4 +1,4 @@
-package com.alteredmechanism.mcsh;
+package com.alteredmechanism.magicconchshell;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -9,21 +9,22 @@ import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+
+import com.alteredmechanism.magicconchshell.javax.script.MagicConchShellFactory;
 
 public class MagicConchShell extends AbstractScriptEngine {
 
     public MagicConchShell() {
-        // TODO Auto-generated constructor stub
+        super();
     }
 
     public MagicConchShell(Bindings bindings) {
         super(bindings);
-        // TODO Auto-generated constructor stub
     }
 
     public Bindings createBindings() {
-        // TODO Auto-generated method stub
-        return null;
+        return new SimpleBindings();
     }
 
     public Object eval(Reader reader, ScriptContext context) throws ScriptException {
@@ -47,14 +48,12 @@ public class MagicConchShell extends AbstractScriptEngine {
         return result;
     }
 
-    public Object eval(String script, ScriptContext context)
-            throws ScriptException {
+    public Object eval(String script, ScriptContext context) throws ScriptException {
         return eval(new StringReader(script));
     }
 
     public ScriptEngineFactory getFactory() {
-        // TODO Auto-generated method stub
-        return null;
+        return new MagicConchShellFactory();
     }
 
 }

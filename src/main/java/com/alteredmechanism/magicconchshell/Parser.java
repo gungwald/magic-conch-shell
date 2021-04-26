@@ -1,10 +1,10 @@
-package com.alteredmechanism.mcsh;
+package com.alteredmechanism.magicconchshell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.alteredmechanism.mcsh.commands.Command;
+import com.alteredmechanism.magicconchshell.commands.Command;
 
 public class Parser {
 	

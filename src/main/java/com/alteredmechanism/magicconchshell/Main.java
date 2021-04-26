@@ -1,4 +1,4 @@
-package com.alteredmechanism.mcsh;
+package com.alteredmechanism.magicconchshell;
 
 import java.io.FileReader;
 

@@ -1,12 +1,12 @@
-package com.alteredmechanism.mcsh;
+package com.alteredmechanism.magicconchshell;
 
 import java.util.List;
 
-import com.alteredmechanism.mcsh.commands.Command;
-import com.alteredmechanism.mcsh.commands.CommentCommand;
-import com.alteredmechanism.mcsh.commands.CpCommand;
-import com.alteredmechanism.mcsh.commands.EchoCommand;
-import com.alteredmechanism.mcsh.commands.ExternalCommand;
+import com.alteredmechanism.magicconchshell.commands.Command;
+import com.alteredmechanism.magicconchshell.commands.CommentCommand;
+import com.alteredmechanism.magicconchshell.commands.CpCommand;
+import com.alteredmechanism.magicconchshell.commands.EchoCommand;
+import com.alteredmechanism.magicconchshell.commands.ExternalCommand;
 
 public class CommandFactory {
 	

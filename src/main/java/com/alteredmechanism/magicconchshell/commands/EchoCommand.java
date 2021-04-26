@@ -1,4 +1,4 @@
-package com.alteredmechanism.mcsh.commands;
+package com.alteredmechanism.magicconchshell.commands;
 
 import java.util.List;
 

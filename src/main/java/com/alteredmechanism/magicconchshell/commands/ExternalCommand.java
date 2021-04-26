@@ -1,4 +1,4 @@
-package com.alteredmechanism.mcsh.commands;
+package com.alteredmechanism.magicconchshell.commands;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
 
-import com.alteredmechanism.mcsh.ShellException;
+import com.alteredmechanism.magicconchshell.ShellException;
 
 public class ExternalCommand extends Command {
 

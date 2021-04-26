@@ -1,8 +1,8 @@
-package com.alteredmechanism.mcsh.commands;
+package com.alteredmechanism.magicconchshell.commands;
 
 import java.util.List;
 
-import com.alteredmechanism.mcsh.ShellException;
+import com.alteredmechanism.magicconchshell.ShellException;
 
 public class CommentCommand extends Command {
 
