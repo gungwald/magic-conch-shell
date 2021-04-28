@@ -24,6 +24,9 @@
     <condition property="sys.install.dir" value="${env.ProgramFiles}/${ant.project.name}" else="/usr/local">
         <os family="windows" />
     </condition>
+    <condition property="start.script" value="${dist.dir}/bin/${ant.project.name}.bat" else="${dist.dir}/bin/${ant.project.name}">
+        <os family="windows" />
+    </condition>
     <property name="bld.dist.dir" value="${build.dir}/distribution" />
     <property name="bsf.lib.dir" value="dependencies/bsf-3.1/lib" />
     <property name="bsf.jar" value="${bsf.lib.dir}/bsf-api-3.1.jar" />
@@ -106,34 +109,30 @@
         <copy file="${bsf.jar}" todir="${bld.dist.dir}/share/java" preservelastmodified="true" />
     </target>
 
-    <target name="userInstall" depends="jar" description="Installs into $HOME/bin and $HOME/lib">
-        <mkdir dir="${user.install.dir}/bin" />
-        <mkdir dir="${user.install.dir}/share/java" />
-        <copy todir="${user.install.dir}/bin" preservelastmodified="true">
-            <fileset dir="${dist.dir}/bin" includes="**/*" />
+    <target name="install" description="Installs to directory given by ${install.dir}" >
+        <mkdir dir="${install.dir}/bin" />
+        <mkdir dir="${install.dir}/share/java" />
+        <copy file="${start.script}" todir="${install.dir}/bin" preservelastmodified="true" verbose="true" />
+        <chmod file="${install.dir}/bin/${ant.project.name}" perm="ugo+rx" />
+        <copy todir="${install.dir}/share/java" preservelastmodified="true" verbose="true">
+            <fileset dir="${lib.dir}" includes="**/*.jar" />
+            <fileset file="${bsf.jar}" />
         </copy>
-        <chmod file="${user.install.dir}/bin/${ant.project.name}" perm="ugo+rx" />
-        <copy todir="${user.install.dir}/share/java" preservelastmodified="true">
-            <fileset dir="${lib.dir}" includes="**/jar.*" />
-        </copy>
-        <exec dir="${user.install.dir}/bin" executable="cmd.exe" osfamily="windows">
-            <arg line="${user.install.dir}/bin/addtopath.bat" />
+        <exec dir="${install.dir}/bin" executable="cmd.exe" osfamily="windows">
+            <arg line="${dist.dir}/bin/addtopath.bat" />
         </exec>
     </target>
 
-    <target name="systemInstall" depends="jar" description="Installs into /usr/local/bin and /usr/local/lib">
-        <mkdir dir="${sys.install.dir}/bin" />
-        <mkdir dir="${sys.install.dir}/share/java" />
-        <copy todir="${sys.install.dir}/bin" preservelastmodified="true">
-            <fileset dir="${dist.dir}/bin" includes="**/*" />
-        </copy>
-        <chmod file="${sys.install.dir}/bin/${ant.project.name}" perm="ugo+rx" />
-        <copy todir="${sys.install.dir}/share/java" preservelastmodified="true">
-            <fileset dir="${lib.dir}" includes="**/jar.*" />
-        </copy>
-        <exec dir="${sys.install.dir}/bin" executable="cmd.exe" osfamily="windows">
-            <arg line="${sys.install.dir}/bin/addtopath.bat" />
-        </exec>
+    <target name="systemInstall" depends="jar" description="Installs into /usr/local or C:\Program Files">
+        <antcall target="install">
+            <param name="install.dir" value="${sys.install.dir}"/>
+        </antcall>
+    </target>
+
+    <target name="userInstall" depends="jar" description="Installs into $HOME/bin and $HOME/lib">
+        <antcall target="install">
+            <param name="install.dir" value="${user.install.dir}"/>
+        </antcall>
     </target>
 
     <target name="distZip" depends="jar,retroJar" description="Build a zip file with just binaries for distribution to users">
