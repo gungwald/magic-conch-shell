@@ -31,8 +31,23 @@
     <property name="bsf.lib.dir" value="dependencies/bsf-3.1/lib" />
     <property name="bsf.jar" value="${bsf.lib.dir}/bsf-api-3.1.jar" />
     <property name="retro.dir" value="dependencies/Retrotranslator-1.2.9-bin" />
-    <property name="java.1.3.lib.dir" value="/System/Library/Frameworks/JavaVM.framework/Versions/1.3/Classes" />
-    <property name="java.1.4.lib.dir" value="/System/Library/Frameworks/JavaVM.framework/Versions/1.4/Classes" />
+    <property name="mac.java.1.3.lib.dir" value="/System/Library/Frameworks/JavaVM.framework/Versions/1.3/Classes" >
+    <condition name="java.1.3.lib.dir" value="${mac.java.1.3.lib.dir}" >
+        <and>
+            <os family="mac"/>
+            <available file="${mac.java.1.3.lib.dir}" type="dir"/>
+        </and>
+    </condition>
+    <property name="mac.java.1.4.lib.dir" value="/System/Library/Frameworks/JavaVM.framework/Versions/1.4/Classes" />
+    <condition name="java.1.4.lib.dir" value="${mac.java.1.4.lib.dir}" >
+        <and>
+            <os family="mac"/>
+            <available file="${mac.java.1.4.lib.dir}" type="dir"/>
+        </and>
+    </condition>
+
+    <target name="props" description="Prints all Java properties known at Ant runtime">
+    </target>
 
     <target name="setup" description="Sets stuff up">
         <mkdir dir="${cls.dir}" />
