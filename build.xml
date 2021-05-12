@@ -47,17 +47,18 @@
 	</condition>
 
 	<target name="props" description="Prints all Java properties known at Ant runtime">
-		<script language="beanshell" setbeans="true">
+		<script language="beanshell" manager="javax" setbeans="true">
 			<classpath>
 				<fileset dir="dependencies/bsf-3.1/lib" includes="bsf-api-3.1.jar" />
 				<fileset dir="dependencies/beanshell-2.0b6" includes="*.jar" />
 			</classpath>
+			
 			<![CDATA[
 				for (Map.Entry<Object,Object> property : System.getProperties().entrySet()) {
 					System.out.printf("%s = %s%n", property.getKey(), property.getValue());
 				}
-    			]]> 
-			</script>
+   			]]> 
+		</script>
 	</target>
 
 	<target name="setup" description="Sets stuff up">
