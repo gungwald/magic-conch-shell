@@ -19,8 +19,7 @@ public class ExternalCommand extends Command {
     public int execute() throws ShellException {
         Process mvn;
         try {
-            mvn = Runtime.getRuntime().exec(
-                    arguments.toArray(new String[arguments.size()]));
+            mvn = Runtime.getRuntime().exec(arguments.toArray(new String[arguments.size()]));
             copyLines(mvn.getInputStream(), System.out);
             copyLines(mvn.getErrorStream(), System.err);
             return mvn.waitFor();
